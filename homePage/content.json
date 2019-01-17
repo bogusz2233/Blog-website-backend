@@ -1,0 +1,6 @@
+{
+   "content" : [
+       {"title" : "Game Snake", "secondTitle": "Gra snake - moj pierwszy projekt stworzony w JS!", "imgScr": "snakeImage.png", "descSrc" : "game_snake.txt"},
+       {"title" : "Przykładowy", "secondTitle": "Gra snake - moj pierwszy projekt stworzony w JS!", "imgScr": "snakeImage.png", "descSrc" : "przykladowy.txt"}
+   ]
+}
