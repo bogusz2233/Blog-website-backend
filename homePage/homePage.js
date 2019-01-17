@@ -4,24 +4,24 @@ const fs = require('fs');
  askingQuery - query send from user
 */
 var askForContent = (askingQuery) =>{
-    let odpowiedz ={
+    let answerReturn ={
         messageError : "ALL_OK"
     };
 
-    if(askingQuery.askForNumber === "true")
+    if(askingQuery.askForNumber == "true")
     {
-        odpowiedz.contentNumber = loadJSONFromFile("homePage/content.json", odpowiedz).content.length;
-        return odpowiedz;
+        answerReturn.contentNumber = countContentFromJSONFile("homePage/content.json", answerReturn).content.length;
+        return answerReturn;
     } else if(askingQuery.contentNumber === undefined)
     {
-        odpowiedz.messageError = "PARAM_MISSED";
-        return odpowiedz;
+        answerReturn.messageError = "PARAM_MISSED";
+        return answerReturn;
     }
    
 
-    odpowiedz.body = loadJSONFromFile("homePage/content.json",askingQuery.contentNumber, odpowiedz.messageError);
-    odpowiedz.body.desc = loadStringFromTxtFile(odpowiedz.body.descSrc);
-    return odpowiedz;
+    answerReturn.body = loadJSONFromFile("homePage/content.json",askingQuery.contentNumber, answerReturn);
+    answerReturn.body.desc = loadStringFromTxtFile(answerReturn.body.descSrc);
+    return answerReturn;
     
 };
 
@@ -31,13 +31,14 @@ argPathFile - relative path to JSON file
 contentNumber - number of content asking for
 contentNumber - 
 */
-var loadJSONFromFile = (argPathFile, contentNumber, errorMessageCallback) =>{
+var loadJSONFromFile = (argPathFile, contentNumber, argAnswer) =>{
     let obj;
     try{
         obj = JSON.parse(fs.readFileSync(argPathFile, 'utf8'));
-        if(obj.content.length <= contentNumber)
+        
+        if(obj.content[contentNumber] == undefined)
         {
-            errorMessageCallback = "No_SUCH_CONTENT";
+            argAnswer.messageError = "WRONG_CONTENT_NUMBER";
         }
         else
         {
@@ -45,7 +46,20 @@ var loadJSONFromFile = (argPathFile, contentNumber, errorMessageCallback) =>{
         }
     }catch(err)
     {
-        errorMessageCallback = "NO_JSON_CONTENT";
+        argAnswer.messageError = "NO_JSON_CONTENT";
+    }
+   
+    return obj =""
+};
+
+var countContentFromJSONFile = (argPathFile, argAnswer) =>{
+    let obj;
+    try{
+        obj = JSON.parse(fs.readFileSync(argPathFile, 'utf8'));
+        return obj;
+    }catch(err)
+    {
+        argAnswer.messageError = "NO_JSON_CONTENT";
     }
    
     return obj =""
