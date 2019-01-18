@@ -7,6 +7,7 @@ var app = express();
 
 app.use(express.static(__dirname + "/public"));
 app.get('/HomePageData',(req, res) => {
+    res.set("Access-Control-Allow-Origin","*");
     res.send(homePage(req.query));
 });
 
