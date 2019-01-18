@@ -23,7 +23,6 @@ var askForContent = (askingQuery) =>{
     answerReturn.body.desc = loadStringFromTxtFile(answerReturn.body.descSrc);
 
     return answerReturn;
-    
 };
 
 /*
