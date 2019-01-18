@@ -1,6 +1,6 @@
 {
    "content" : [
-       {"title" : "Game Snake", "secondTitle": "Gra snake - moj pierwszy projekt stworzony w JS!", "imgScr": "snakeImage.png", "descSrc" : "game_snake.txt"},
-       {"title" : "Przykładowy", "secondTitle": "Gra snake - moj pierwszy projekt stworzony w JS!", "imgScr": "snakeImage.png", "descSrc" : "przykladowy.txt"}
+       {"title" : "Game Snake", "secondTitle": "Gra snake - moj pierwszy projekt stworzony w JS!", "imgScr": "snake-game.png", "descSrc" : "game_snake.txt", "bckImgColor" : "#364244", "link": "snake/snake.html"},
+       {"title" : "Przykładowy", "secondTitle": "Przykładowy projekt stworzony w JS!", "descSrc" : "przykladowy.txt"}
    ]
 }

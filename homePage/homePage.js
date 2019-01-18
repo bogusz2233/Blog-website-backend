@@ -21,6 +21,7 @@ var askForContent = (askingQuery) =>{
 
     answerReturn.body = loadJSONFromFile("homePage/content.json",askingQuery.contentNumber, answerReturn);
     answerReturn.body.desc = loadStringFromTxtFile(answerReturn.body.descSrc);
+
     return answerReturn;
     
 };
