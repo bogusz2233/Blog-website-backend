@@ -1,0 +1,4 @@
+<b>Aplikacja pogody</b>
+Jest to mój pierwszy projekt wykorzystyjący możliwości jakie daje mi node.js. Aplikacja wykorzystuje takie api jak geocode od google i api do pogody darksky.
+
+Obługi tych api nauczyłem sie z kursu node.js na udemy, który tak na marginesie był bardzo dobry. Teraz aplikacja ma nabrać bardziej praktycznego oblicza poprzez połączenie jej ze frontendem. To jaką dziś mamy pogode?

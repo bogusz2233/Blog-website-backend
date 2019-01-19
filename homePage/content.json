@@ -1,6 +1,6 @@
 {
    "content" : [
        {"title" : "Game Snake", "secondTitle": "Gra snake - moj pierwszy projekt stworzony w JS!", "imgScr": "snake-game.PNG", "descSrc" : "game_snake.txt", "bckImgColor" : "#364244", "link": "snake/snake.html"},
-       {"title" : "Przykładow1y", "secondTitle": "Przykładowy projekt stworzony w JS!", "descSrc" : "przykladowy.txt"}
+       {"title" : "Weather app ", "secondTitle": "Sprawdz jaką mamy dziś pogode i jak się ubrać! Node.js wita!", "imgScr": "weather.png", "descSrc" : "weather.txt", "bckImgColor" : "#c6c6c6", "link": "weather/weather.html"}
    ]
 }
