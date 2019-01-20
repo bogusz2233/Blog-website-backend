@@ -34,6 +34,7 @@ var queryWheter = (argQuery, responseCallback) => {
 
             //send darksky request  
             var weatherUrl = `https://api.darksky.net/forecast/${IP_KEY_DARKSKY}/${jsonResponse.lat},${jsonResponse.lng}`;
+            console.log(weatherUrl);
             return axios.get(weatherUrl);
         }
 
@@ -41,6 +42,12 @@ var queryWheter = (argQuery, responseCallback) => {
         if(argQuery.get == "currently")
         {
             jsonResponse.currently = weatherResponse.data.currently;
+        }else if(argQuery.get == "hourly")
+        {
+            jsonResponse.hourly = weatherResponse.data.hourly.data;
+        }else if(argQuery.get == "daily")
+        {
+            jsonResponse.daily = weatherResponse.data.daily.data;
         }
         else
         {
