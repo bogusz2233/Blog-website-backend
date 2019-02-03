@@ -3,7 +3,7 @@ const express = require('express');
 const homePage = require("./homePage/homePage");
 const weather = require("./weather/weather");
 
-const port = process.env.PORT || 3000;  // pobranie portu, gdy nie znajdzie wstawi 3000
+const port = process.env.PORT || 3003;  // pobranie portu, gdy nie znajdzie wstawi 3000
 var app = express();
 
 app.use(express.static(__dirname + "/public"));
@@ -17,6 +17,7 @@ app.get('/HomePageData',(req, res) => {
 //weather get
 app.get("/weather", (request, response) => {
     response.set("Access-Control-Allow-Origin","*");
+    response.set("content-type","application/json; charset=UTF-8");
     console.log("Zapytanie get: " + request.query.get)
     weather(request.query, response);
 });
