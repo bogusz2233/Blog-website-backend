@@ -8,7 +8,9 @@ const IP_KEY_DARKSKY = "ff392353fef24409879e40c8262de7a8";
     responseCallback - reference to response object, use here to send back response
 */
 var queryWheter = (argQuery, responseCallback) => {
-    var jsonResponse;   //response json
+    var jsonResponse = {
+        messageError : "ALL_OK"
+    };   //response json
     var encodedGeocodeArgs = encodeURIComponent(argQuery.place);
     var geocodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedGeocodeArgs}&key=${IP_KEY_GEOCODE}`;
 
@@ -16,10 +18,10 @@ var queryWheter = (argQuery, responseCallback) => {
     if(argQuery.place ==undefined)
     {
         jsonResponse= {
-            errorMessage: "NO_PLACE_PARAM_PASSED"
+            messageError: "NO_PLACE_PARAM_PASSED"
         };
         
-        responseCallback.send(JSON.stringify(jsonResponse));
+        responseCallback.json(jsonResponse);
         return 0;
     }
     //send geocode request  
@@ -27,14 +29,14 @@ var queryWheter = (argQuery, responseCallback) => {
         if (response.data.status === 'ZERO_RESULTS') {
             throw new Error("Unable to find that address");
         } else {
-            jsonResponse = {
+            jsonResponse.body = {
                 lat: response.data.results[0].geometry.location.lat,
                 lng: response.data.results[0].geometry.location.lng,
                 formatted_address: response.data.results[0].formatted_address
             }
 
             //send darksky request  
-            var weatherUrl = `https://api.darksky.net/forecast/${IP_KEY_DARKSKY}/${jsonResponse.lat},${jsonResponse.lng}`;
+            var weatherUrl = `https://api.darksky.net/forecast/${IP_KEY_DARKSKY}/${jsonResponse.body.lat},${jsonResponse.body.lng}`;
             console.log(weatherUrl);
             return axios.get(weatherUrl);
         }
@@ -42,19 +44,20 @@ var queryWheter = (argQuery, responseCallback) => {
     }).then((weatherResponse) => {
         if(argQuery.get == "currently")
         {
-            jsonResponse.currently = weatherResponse.data.currently;
+            jsonResponse.body = weatherResponse.data.currently;
         }else if(argQuery.get == "hourly")
         {
-            jsonResponse.hourly = weatherResponse.data.hourly.data;
+            jsonResponse.body = weatherResponse.data.hourly.data;
         }else if(argQuery.get == "daily")
         {
-            jsonResponse.daily = weatherResponse.data.daily.data;
+            jsonResponse.body = weatherResponse.data.daily.data;
         }
         else
         {
-            jsonResponse.errorMessage = "NO_GET_PARAM_PASSED";
+            jsonResponse.messageError = "NO_GET_PARAM_PASSED";
         }
-        responseCallback.send(JSON.stringify(jsonResponse));
+        responseCallback.json(jsonResponse);
+        return 0;
     }).catch((err) => {
         if (err.code === 'ENOTFOUND') {
             jsonResponse.errorMessage = "UNABLE_TO_CONNECT_URL";
@@ -62,7 +65,8 @@ var queryWheter = (argQuery, responseCallback) => {
         } else {
             jsonResponse.errorMessage = err.message;
         }
-        responseCallback.send(JSON.stringify(jsonResponse));
+        responseCallback.json(jsonResponse);
+        return 0;
     });
 };
 

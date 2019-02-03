@@ -8,19 +8,33 @@ var app = express();
 
 app.use(express.static(__dirname + "/public"));
 
+// app.use(function(req, res, next) {
+//     res.header("Access-Control-Allow-Origin", '*');
+//     res.header("Access-Control-Allow-Credentials", true);
+//     res.header('Access-Control-Allow-Methods', 'GET');
+//     res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+//     next();
+// });
 //homePage get:
+//weather get
+app.get("/weather", (request, res) => {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
+    // response.setHeader('Content-Type', 'application/json');
+    console.log("Zapytanie get: " + request.query.get)
+    weather(request.query, res);
+});
 app.get('/HomePageData',(req, res) => {
-    res.set("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
     res.send(homePage(req.query));
 });
 
-//weather get
-app.get("/weather", (request, response) => {
-    response.setHeader("Access-Control-Allow-Origin","*");
-    response.setHeader('Content-Type', 'application/json');
-    console.log("Zapytanie get: " + request.query.get)
-    weather(request.query, response);
-});
+
 
 app.listen(port, () =>{ // port od heroku
     console.log(`Server is up on port ${port}`);
