@@ -16,8 +16,8 @@ app.get('/HomePageData',(req, res) => {
 
 //weather get
 app.get("/weather", (request, response) => {
-    response.set("Access-Control-Allow-Origin","*");
-    response.set("content-type","application/json; charset=UTF-8");
+    response.setHeader("Access-Control-Allow-Origin","*");
+    response.setHeader('Content-Type', 'application/json');
     console.log("Zapytanie get: " + request.query.get)
     weather(request.query, response);
 });

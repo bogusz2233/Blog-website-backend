@@ -18,7 +18,8 @@ var queryWheter = (argQuery, responseCallback) => {
         jsonResponse= {
             errorMessage: "NO_PLACE_PARAM_PASSED"
         };
-        responseCallback.send(jsonResponse);
+        
+        responseCallback.send(JSON.stringify(jsonResponse));
         return 0;
     }
     //send geocode request  
@@ -53,7 +54,7 @@ var queryWheter = (argQuery, responseCallback) => {
         {
             jsonResponse.errorMessage = "NO_GET_PARAM_PASSED";
         }
-        responseCallback.send(jsonResponse);
+        responseCallback.send(JSON.stringify(jsonResponse));
     }).catch((err) => {
         if (err.code === 'ENOTFOUND') {
             jsonResponse.errorMessage = "UNABLE_TO_CONNECT_URL";
@@ -61,7 +62,7 @@ var queryWheter = (argQuery, responseCallback) => {
         } else {
             jsonResponse.errorMessage = err.message;
         }
-        responseCallback.send(jsonResponse);
+        responseCallback.send(JSON.stringify(jsonResponse));
     });
 };
 
