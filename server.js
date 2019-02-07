@@ -2,9 +2,12 @@
 const express = require('express');
 const homePage = require("./homePage/homePage");
 const weather = require("./weather/weather");
+const aws = require('aws-sdk');
+var mysql      = require('mysql');
 
 const port = process.env.PORT || 3003;  // pobranie portu, gdy nie znajdzie wstawi 3000
 var app = express();
+
 
 app.use(express.static(__dirname + "/public"));
 
@@ -34,7 +37,23 @@ app.get('/HomePageData',(req, res) => {
     res.send(homePage(req.query));
 });
 
-
+app.get("/databaseTest", (req, res) => {
+    var connection = mysql.createConnection({
+        connectionLimit: 50,
+        host     : "bogusz2.vot.pl",
+        user     : process.env.DATA_BASE_LOGIN,
+        password : process.env.DATA_BASE_PASSWORD,
+        database: "bogusz2_blog-site"
+        });
+    
+        connection.connect(function(err) {
+            if (err) {
+                res.send('error connecting: ' + err.stack);
+              return;
+            }
+            res.send('connected as id ' + connection.threadId);
+          });
+});
 
 app.listen(port, () =>{ // port od heroku
     console.log(`Server is up on port ${port}`);
