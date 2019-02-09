@@ -44,7 +44,7 @@ var queryWheter = (argQuery, responseCallback) => {
     }).then((weatherResponse) => {
         if(argQuery.get == "currently")
         {
-            jsonResponse.body = weatherResponse.data.currently;
+            jsonResponse.body.currently = weatherResponse.data.currently;
         }else if(argQuery.get == "hourly")
         {
             jsonResponse.body = weatherResponse.data.hourly.data;
