@@ -5,8 +5,10 @@ var posts = () => {
     const api = Router();
 
     api.get("/id/:id", postControler.findOne);
+    api.get("/id/:id/:property", postControler.findOneColumn)
     api.get("/all", postControler.getAll);
     api.get("/countAll", postControler.getPostsCount);
+    
     return api;
 }
 

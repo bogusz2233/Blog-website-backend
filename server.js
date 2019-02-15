@@ -2,7 +2,7 @@
 const express = require('express');
 const homePage = require("./homePage/homePage");
 const weather = require("./weather/weather");
-const posts = require("./homePage/posts");
+const posts = require("./posts/posts");
 
 const port = process.env.PORT || 3003;  // pobranie portu, gdy nie znajdzie wstawi 3000
 var app = express();

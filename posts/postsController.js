@@ -1,6 +1,7 @@
 
-const mysql      = require('mysql');
-const hostInfo = () =>{
+const mysql = require('mysql');
+
+const getHostInfo = () =>{
     try{
         return require("./hostInfo");
     }catch(err)
@@ -14,20 +15,26 @@ const hostInfo = () =>{
     }
 }
 
-var connection = mysql.createConnection({
-    connectionLimit: 50,
-    host     : hostInfo().HOST_NAME,
-    user     : hostInfo().USER_NAME,
-    password : hostInfo().PASSWORD,
-    database : hostInfo().DATA_BASE 
-    });
 
+const createNewMySqlConnection = () =>{
+    return mysql.createConnection({
+        connectionLimit: 50,
+        host     : getHostInfo().HOST_NAME,
+        user     : getHostInfo().USER_NAME,
+        password : getHostInfo().PASSWORD,
+        database : getHostInfo().DATA_BASE 
+        });
+}
+var connection = createNewMySqlConnection();
 
-var findOne =  (req,res) => {
-
+var getgetHostInfo = () =>{
+    return getHostInfo();
+}
+var findOne = async (req,res) => {
+      
         const queryString = "SELECT * FROM posts WHERE id = ?";
         const postId = req.params.id;
-        connection.query(queryString, [postId],(err, rows, fields) =>{
+        await connection.query(queryString, [postId],(err, rows, fields) =>{
             if(err)
             {
                 
@@ -46,7 +53,35 @@ var findOne =  (req,res) => {
             }
     });
 };
- 
+
+var findOneColumn = async (req,res) => {
+      
+    const queryString = "SELECT ? FROM posts WHERE id = ?";
+    const postId = req.params.id;
+    const postProp = req.params.property;
+    console.log(postId, postProp);
+    await connection.query(queryString, [postProp], (err, rows, fields) =>{
+        if(err)
+        {
+            
+            res.sendStatus(500);
+        }
+        else
+        {
+            if(rows.length > 0)
+            {
+                console.log(rows);
+                console.log(fields);
+                res.json(rows[0]);
+            }
+            else
+            {
+                res.sendStatus(404);
+            }
+        }
+});
+};
+
 const getAll = (req,res) => {
 
     const queryString = "SELECT * FROM posts";
@@ -96,6 +131,9 @@ const getPostsCount = (req,res) => {
 module.exports = 
 {
     findOne,
+    findOneColumn,
     getAll,
-    getPostsCount
+    getPostsCount,
+    getHostInfo,
+    createNewMySqlConnection,
 };

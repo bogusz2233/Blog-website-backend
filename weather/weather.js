@@ -7,7 +7,7 @@ const IP_KEY_DARKSKY = "ff392353fef24409879e40c8262de7a8";
     argQuery - arguments passed in querry
     responseCallback - reference to response object, use here to send back response
 */
-var queryWheter = (argQuery, responseCallback) => {
+var queryWheter = async (argQuery, responseCallback) => {
     var jsonResponse = {
         messageError : "ALL_OK"
     };   //response json
@@ -25,7 +25,7 @@ var queryWheter = (argQuery, responseCallback) => {
         return 0;
     }
     //send geocode request  
-    axios.get(geocodeUrl).then((response) => {
+    await axios.get(geocodeUrl).then((response) => {
         if (response.data.status === 'ZERO_RESULTS') {
             throw new Error("Unable to find that address");
         } else {
@@ -68,6 +68,8 @@ var queryWheter = (argQuery, responseCallback) => {
         responseCallback.json(jsonResponse);
         return 0;
     });
+
+    console.log("Weather end");
 };
 
 module.exports = queryWheter;
