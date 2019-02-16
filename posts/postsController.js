@@ -1,43 +1,14 @@
 
-const mysql = require('mysql');
+const {createNewMySqlConnection} = require("../database/database");
 
-const getHostInfo = () =>{
-    try{
-        return require("./hostInfo");
-    }catch(err)
-    {
-        return {
-            "HOST_NAME": process.env.DATA_BASE_HOST_NAME,
-            "USER_NAME": process.env.DATA_BASE_LOGIN,
-            "PASSWORD": process.env.DATA_BASE_PASSWORD,
-            "DATA_BASE": process.env.DATA_BASE_NAME
-        };
-    }
-}
-
-
-const createNewMySqlConnection = () =>{
-    return mysql.createConnection({
-        connectionLimit: 50,
-        host     : getHostInfo().HOST_NAME,
-        user     : getHostInfo().USER_NAME,
-        password : getHostInfo().PASSWORD,
-        database : getHostInfo().DATA_BASE 
-        });
-}
 var connection = createNewMySqlConnection();
 
-var getgetHostInfo = () =>{
-    return getHostInfo();
-}
-var findOne = async (req,res) => {
-      
+const findOne = async (req,res) => {
         const queryString = "SELECT * FROM posts WHERE id = ?";
         const postId = req.params.id;
         await connection.query(queryString, [postId],(err, rows, fields) =>{
             if(err)
             {
-                
                 res.sendStatus(500);
             }
             else
@@ -51,10 +22,11 @@ var findOne = async (req,res) => {
                     res.sendStatus(404);
                 }
             }
+            return;
     });
 };
 
-var findOneColumn = async (req,res) => {
+const findOneColumn = async (req,res) => {
       
     const queryString = "SELECT ? FROM posts WHERE id = ?";
     const postId = req.params.id;
@@ -134,6 +106,4 @@ module.exports =
     findOneColumn,
     getAll,
     getPostsCount,
-    getHostInfo,
-    createNewMySqlConnection,
 };
