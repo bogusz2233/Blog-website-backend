@@ -1,6 +1,24 @@
 const axios = require('axios');
-const IP_KEY_GEOCODE = "AIzaSyDgFQItK2bPF6UqPjZt6YBh-fc77OJJ82Y";
-const IP_KEY_DARKSKY = "ff392353fef24409879e40c8262de7a8";
+
+const getGeocodIp = () =>{
+    try{
+        return require("./weatherInfo").IP_KEY_GEOCODE;
+    }catch(err)
+    {
+        return process.env.IP_KEY_GEOCODE;
+    }
+}
+const getDarkskyIp = () =>{
+    try{
+        return require("./weatherInfo").IP_KEY_DARKSKY;
+    }catch(err)
+    {
+        return process.env.IP_KEY_DARKSKY;
+    }
+}
+
+const IP_KEY_GEOCODE = getGeocodIp();
+const IP_KEY_DARKSKY = getDarkskyIp();
 
 /*
     Function return actual weather

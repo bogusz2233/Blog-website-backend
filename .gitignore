@@ -1,3 +1,4 @@
 node_modules/
 **/hostInfo.js
+**/weatherInfo.js
 server.log

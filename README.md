@@ -6,4 +6,5 @@ Link to the website: https://bogusz.netlify.com
 ## Project on a website:
 - Dynamically adding content from backend.
 - Weather api.
-
+- Rest Api connected with MySql database
+- Mocha test
