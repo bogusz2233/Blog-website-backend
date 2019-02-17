@@ -6,7 +6,7 @@ var connection = createNewMySqlConnection();
 const createOne = async (request, response)  =>{
     let bodyReq = request.body;
     //Gdy nie podano żadnych infomacji
-    if(Object.entries(bodyReq).length === 0 ) return response.status(400).send({"errorMessage": "Didn't pass date in body"});
+    if(Object.entries(bodyReq).length === 0 ) return response.status(400).send({"errorMessage": "Didn't pass data in body"});
     
     let {userName, message, idPost} = request.body;
     let dateObj = new Date();

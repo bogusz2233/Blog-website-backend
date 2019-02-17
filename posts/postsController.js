@@ -55,7 +55,6 @@ const findOneColumn = async (req,res) => {
 };
 
 const getAll = (req,res) => {
-
     const queryString = "SELECT * FROM posts";
     connection.query(queryString, (err, rows, fields) =>{
         if(err)
@@ -102,8 +101,8 @@ const getPostsCount = (req,res) => {
 
 module.exports = 
 {
+    getPostsCount,
     findOne,
     findOneColumn,
     getAll,
-    getPostsCount,
 };
