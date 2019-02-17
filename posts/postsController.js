@@ -4,30 +4,35 @@ const {createNewMySqlConnection} = require("../database/database");
 var connection = createNewMySqlConnection();
 
 const findOne = async (req,res) => {
-        const queryString = "SELECT * FROM posts WHERE id = ?";
-        const postId = req.params.id;
-        await connection.query(queryString, [postId],(err, rows, fields) =>{
-            if(err)
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
+    const queryString = "SELECT * FROM posts WHERE id = ?";
+    const postId = req.params.id;
+
+    await connection.query(queryString, [postId],(err, rows, fields) =>{
+        if(err)
+        {
+            res.sendStatus(500);
+        }
+        else
+        {
+            if(rows.length > 0)
             {
-                res.sendStatus(500);
+                res.json(rows[0]);
             }
             else
             {
-                if(rows.length > 0)
-                {
-                    res.json(rows[0]);
-                }
-                else
-                {
-                    res.sendStatus(404);
-                }
+                res.sendStatus(404);
             }
-            return;
+        }
+        return;
     });
 };
 
 const findOneColumn = async (req,res) => {
-      
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
+
     const queryString = "SELECT ? FROM posts WHERE id = ?";
     const postId = req.params.id;
     const postProp = req.params.property;
@@ -55,6 +60,9 @@ const findOneColumn = async (req,res) => {
 };
 
 const getAll = (req,res) => {
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
+
     const queryString = "SELECT * FROM posts";
     connection.query(queryString, (err, rows, fields) =>{
         if(err)
@@ -78,6 +86,8 @@ const getAll = (req,res) => {
 
 const getPostsCount = (req,res) => {
 
+    res.header("Access-Control-Allow-Origin", '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
     const queryString = "SELECT COUNT(id) as COUNT FROM posts";
     connection.query(queryString, (err, rows, fields) =>{
         if(err)
